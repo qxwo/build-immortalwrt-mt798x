@@ -53,13 +53,12 @@ jobs:
 
     - name: 配置 Feeds
       run: |
-        cp -f $GITHUB_WORKSPACE/r30b1.config $GITHUB_WORKSPACE/openwrt/
+        [ -e files ] && mv files openwrt/files
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         cd openwrt
         echo "src-git kenzo https://github.com/kenzok8/openwrt-packages" >> ./feeds.conf.default
         echo "src-git small https://github.com/kenzok8/small" >> ./feeds.conf.default
         ./scripts/feeds update -a
-        ./scripts/feeds install -a
-        cp -f $GITHUB_WORKSPACE/r30b1.config $GITHUB_WORKSPACE/openwrt/
         ./scripts/feeds install -a
 
     - name: 修改 Lan IP
